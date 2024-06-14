@@ -1,0 +1,388 @@
+<%- include('parts/header.ejs')%>
+<head>
+	<link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container p-5 ">
+	<form name="form2" id="ff2" method="post" action="/ajoutAnnonce"  enctype="multipart/form-data">
+        <div class="house">
+			
+		</div>
+		<section class="border" > 
+			<fieldset > 
+				<legend>Logement </legend>
+		<div class="input-group mb-3" >
+            <label class="input-group-text" for="inputGroupSelect01">Titre</label>
+			<input type="text" class="form-control" placeholder="Titre:" name="titre" id="firstname" aria-describedby="emailHelp" required>
+            
+        </div>
+		<div class="input-group mb-3">
+			<label class="input-group-text" for="inputGroupSelect01">Types : </label>
+				<select class="form-select" name="types" required>
+					<option value="">-Sélectionner-</option>
+					<option value="2">Location</option>
+					<option value="2">Colocation</option>
+					
+				  </select>
+		
+        </div>
+		<div class="input-group mb-3">
+			<label class="input-group-text" for="inputGroupSelect01">Colocs Déja présents : </label>
+				<select class="form-select" name="colocs" required>
+					<option value="">-Sélectionner-</option>
+					<option value="0 (inoccupé)">0 (inoccupé)</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				  </select>
+		
+        </div>
+		<div class="input-group mb-3">
+			<label class="input-group-text" for="inputGroupSelect01"> Logement :</label>
+				<select class="form-select" name="logement" required>
+					<option value="">-Sélectionner-</option>
+					<option value="Maison">Maison</option>
+					<option value="Studio">Studio</option>
+					<option value="Appartement">Appartement</option>
+					
+				  </select>
+		
+        </div>
+		<div class="input-group mb-3">
+			<label class="input-group-text" for="inputGroupSelect01"> Nombre de piéces :</label>
+				<select class="form-select" name="piece" required>
+					<option value="">-Sélectionner-</option>
+					<option value="1 piéce">1 piéce </option>
+					<option value="2 piéces">2 piéces </option>
+					<option value="3 piéces">3 piéces </option>
+					<option value="4 piéces">4 piéces </option>
+				  </select>
+		
+        </div>
+		<div class="input-group mb-3" >
+            <label class="input-group-text" for="inputGroupSelect01"> Superficie en (m²)</label>
+			<input type="tel" class="form-control"  name="superficie" id="firstname" aria-describedby="emailHelp" required>
+            
+        </div>
+	</fieldset>
+	</section>
+	<section>
+		<fieldset class="border"> 
+			<legend>Localisation</legend>
+		<div class="input-group mb-3" >
+			<!-- Search input -->
+			<label class="input-group-text" for="inputGroupSelect01">Adresse </label>
+            <input id="searchInput" class="form-control" type="text" placeholder="Enter a location" name="adresse" required >
+		</div>
+<!-- Google map -->
+<div id="map">
+	
+</div>
+<iframe
+          class="position-relative w-100 h-100"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+		  
+          frameborder="0"
+          style="min-height: 450px; border: 0"
+          allowfullscreen=""
+          aria-hidden="false"
+          tabindex="0"
+		  
+        ><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwAV3er3WO7SErBxg29ihtKoJDhvhBlLg" async defer></script>
+	</iframe>
+<!-- Display geolocation data -->
+<!--ul class="geo-data">
+    <li>Full Address: <span id="location"></span></li>
+    <li>Postal Code: <span id="postal_code"></span></li>
+    <li>Country: <span id="country"></span></li>
+    <li>Latitude: <span id="lat"></span></li>
+    <li>Longitude: <span id="lon"></span></li>
+</ul-->
+		
+
+
+<!--script>
+	function initMap() {
+		var map = new google.maps.Map(document.getElementById('map'), {
+		  center: {lat: -33.8688, lng: 151.2195},
+		  zoom: 13
+		});
+		var input = document.getElementById('searchInput');
+		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	
+		var autocomplete = new google.maps.places.Autocomplete(input);
+		autocomplete.bindTo('bounds', map);
+	
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker({
+			map: map,
+			anchorPoint: new google.maps.Point(0, -29)
+		});
+	
+		autocomplete.addListener('place_changed', function() {
+			infowindow.close();
+			marker.setVisible(false);
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				window.alert("Autocomplete's returned place contains no geometry");
+				return;
+			}
+	  
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+				map.fitBounds(place.geometry.viewport);
+			} else {
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);
+			}
+			marker.setIcon(({
+				url: place.icon,
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+		
+			var address = '';
+			if (place.address_components) {
+				address = [
+				  (place.address_components[0] && place.address_components[0].short_name || ''),
+				  (place.address_components[1] && place.address_components[1].short_name || ''),
+				  (place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+			}
+		
+			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+			infowindow.open(map, marker);
+		  
+			// Location details
+			for (var i = 0; i < place.address_components.length; i++) {
+				if(place.address_components[i].types[0] == 'postal_code'){
+					document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+				}
+				if(place.address_components[i].types[0] == 'country'){
+					document.getElementById('country').innerHTML = place.address_components[i].long_name;
+				}
+			}
+			document.getElementById('location').innerHTML = place.formatted_address;
+			document.getElementById('lat').innerHTML = place.geometry.location.lat();
+			document.getElementById('lon').innerHTML = place.geometry.location.lng();
+		});
+	}
+	</script-->
+    
+</fieldset>
+	</section>
+
+	<!--section id="listing_rules_data_row" class="listing_form_row big-radius">
+
+		<div class="listing_form_icon_container">
+			<div class="listing_form_icon">
+				<i class="fas fa-balance-scale"></i>
+				<label>Règles</label>
+			</div>
+		</div>
+
+		<div class="listing_form_content_container">
+
+	  <div class="checkbox_container">
+
+		 <div class="input_container">
+			<input id="only_women_allowed_checkbox" type="checkbox" ng-model="$ctrl.listing.data.only_women_allowed">
+			<label for="only_women_allowed_checkbox">♀️ Filles uniquement</label>
+		 </div>
+
+		 <div class="input_container">
+			<input id="only_men_allowed_checkbox" type="checkbox" ng-model="$ctrl.listing.data.only_men_allowed">
+			<label for="only_men_allowed_checkbox">♂️ Garçons uniquement</label>
+		 </div>
+	  </div>
+
+	 <div class="checkbox_container">
+
+		 <div class="input_container">
+			<input id="smokers_allowed_checkbox" type="checkbox" ng-model="$ctrl.listing.data.smokers_allowed">
+			<label for="smokers_allowed_checkbox">🚬 Fumeurs acceptés</label>
+		 </div>
+
+		 <div class="input_container">
+			<input id="pets_allowed_checkbox" type="checkbox" ng-model="$ctrl.listing.data.pets_allowed">
+			<label for="pets_allowed_checkbox">🐈 Animaux acceptés</label>
+		 </div>
+	  </div>
+
+		</div>
+
+	</section-->
+    
+	<section class="border">
+		<fieldset > 
+			<legend>Chambre</legend>
+	<div class="input-group mb-3" >
+		<label class="input-group-text" for="inputGroupSelect01"> Taille en (m²)</label>
+			<input type="tel" class="form-control"  name="taille" id="firstname" aria-describedby="emailHelp" required>
+	</div>
+	<div class="input-group mb-3">
+		<label class="input-group-text" for="inputGroupSelect01">Disponible à partir du:</label>
+		<div class="d-flex align-items-center">
+			<select class="form-select me-2" name="day" required>
+				<% for (let i=1; i <=31; i++) { %>
+					<option value="<%= i %>">
+						<%= i %>
+					</option>
+					<% } %>
+			</select>
+			<select class="form-select me-2" name="month" required>
+				<% const months=['Jan', 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' , 'Aug' , 'Sep' , 'Oct' , 'Nov'
+					, 'Dec' ]; %>
+					<% for (let i=0; i < 12; i++) { %>
+						<option value="<%= i %>">
+							<%= months[i] %>
+						</option>
+						<% } %>
+			</select>
+			<select class="form-select" name="year" required>
+				<% const currentYear=new Date().getFullYear(); %>
+					<% for (let i=currentYear; i <=currentYear + 5; i++) { %>
+						<option value="<%= i %>">
+							<%= i %>
+						</option>
+						<% } %>
+			</select>
+		</div>
+	</div>
+
+    </fieldset>
+	</section>
+
+	<section class="border">
+		<fieldset > 
+			<legend>Montant</legend>
+	<div class="input-group mb-3" >
+		<label class="input-group-text" for="inputGroupSelect01"> Montant Total en (DT) :</label> 
+			<input type="text" class="form-control"  name="montant" id="firstname" aria-describedby="emailHelp"  required>
+	</div>
+	<div class="input-group mb-3" >
+		<label class="input-group-text" for="inputGroupSelect01"> Caution en (DT) : </label>
+			<input type="text" class="form-control"  name="caution" id="firstname" required>
+	</div>
+    </fieldset>
+	</section>
+
+	
+
+	<section class="border">
+		<fieldset > 
+			<legend>Contact</legend>
+			<div class="input-group mb-3" >
+				<label class="input-group-text" for="inputGroupSelect01">Email</label>
+				<input type="email" class="form-control"  name="email" id="firstname" aria-describedby="emailHelp"  pattern =".+@gmail\.com" required> 
+				
+			</div>
+			<div class="input-group mb-3" >
+				<label class="input-group-text" for="inputGroupSelect01">Téléphone</label>
+					<input type="tel" class="form-control"  name="tel" id="phone" maxlength="8" required>
+				
+				<script>
+					// récupère l'élément du champ de saisie de téléphone
+					var phoneInput = document.getElementById("phone");
+
+					// ajoute un écouteur d'événement à l'élément pour vérifier la saisie de l'utilisateur
+					phoneInput.addEventListener("input", function (event) {
+						// récupère la valeur saisie par l'utilisateur
+						var phoneValue = event.target.value;
+
+						// supprime tous les caractères non numériques de la valeur saisie
+						var numericValue = phoneValue.replace(/[^0-9]/g, "");
+
+						// met à jour la valeur du champ de saisie avec la valeur numérique
+						event.target.value = numericValue;
+					});
+				</script>
+
+				
+			</div>
+    </fieldset>
+	</section>
+    
+	<section class="border">
+		<fieldset > 
+			<legend>Description</legend>
+			<div class="input-group mb-3" >
+			<textarea class="cmb2_textarea" name="text"  class="form-control" id="property_text" cols="150" rows="10" data-hash='29me9n24e85g' required="required"></textarea>
+			
+			</div>
+		</fieldest>		
+	</section>
+
+	<section class="border">
+		<fieldset > 
+			<legend>Photos</legend>
+			<div class="input-group mb-3" >
+				<label class="input-group-text" for="inputGroupFile01"> Ajouter des photos de Logement</label>
+				<input type="file" class="form-control"  name="photo" id="inputGroupFile02"placeholder="Ajouter des photos" required >
+				
+			  </div>
+		</fieldest>		
+	</section>
+	<section class="border">
+		<fieldset > 
+			<legend>Régles</legend>
+			<div class="input-group mb-3" required >
+				
+				<input type="checkbox" name="sport" value="Wifi"> &thinsp;
+				📶 Wifi &thinsp;&thinsp;&thinsp;&thinsp;
+                <input type="checkbox" name="sport" value="Meublé" > &thinsp;
+				🛋️ Meublé  &thinsp;&thinsp;&thinsp;&thinsp;
+                <input type="checkbox" name="sport" value="Machine" >&thinsp;
+				🧦 Machine &agrave; laver &thinsp;&thinsp;&thinsp;&thinsp;
+                <input type="checkbox" name="sport" value="jardin" >&thinsp;
+				🌳 Jardin <br/>
+                
+			
+			  </div>
+		</fieldest>		
+	</section>
+	<% if (Smessage) {%>
+		<div class="alert alert-success">
+			<%= Smessage %>
+	
+		</div>
+	
+		<% } %>
+			<% if (Emessage) {%>
+				<div class="alert alert-danger">
+					<%= Emessage %>
+	
+				</div>
+	
+				<% } %>
+	<button type="submit" class="btn btn-4  btn btn-success d-grid gap-2 col-3 mx-auto" class="tt">Déposer une annonce</button>
+  </form> 
+
+</div>
+
+</body>
+    
+<%- include('parts/footer.ejs')%>
+
+
+	
+	
+						
+						
+						
+												
+			
+	
+	
+	
+	
+		
+	

@@ -1,0 +1,78 @@
+<%- include('parts/header.ejs')%>
+<div class="container p-5 ">
+<div class="col-md-20">
+    <div class="heading text-center" id="m"><h2>Creer Votre Compte</h2></div>
+    <form name="form2" id="ff2" method="post" action="/register" >
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Nom :" name="nom" id="firstname" required>
+            
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Prenom :" name="prenom" id="lastname" required>
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" placeholder="Adresse Email :" name="email" id="email"  pattern =".+@gmail\.com" required>
+        </div>
+        <div class="form-group">
+            <input type="date" class="form-control"  name="date" id="DN" required>
+        </div>
+        <div class="form-group">
+            <input type="tel" class="form-control" placeholder="Téléphone :" name="tel" id="phone" maxlength="8" required>
+        </div>
+        
+        <script>
+            // récupère l'élément du champ de saisie de téléphone
+            var phoneInput = document.getElementById("phone");
+
+            // ajoute un écouteur d'événement à l'élément pour vérifier la saisie de l'utilisateur
+            phoneInput.addEventListener("input", function (event) {
+                // récupère la valeur saisie par l'utilisateur
+                var phoneValue = event.target.value;
+
+                // supprime tous les caractères non numériques de la valeur saisie
+                var numericValue = phoneValue.replace(/[^0-9]/g, "");
+
+                // met à jour la valeur du champ de saisie avec la valeur numérique
+                event.target.value = numericValue;
+            });
+        </script>
+
+        
+    <div class="form-group">
+        <div class="password-input-wrapper">
+            <input type="password" class="form-control" placeholder="Mot De Passe :" name="password" id="password" required>
+            <i class="password-toggle-icon fas fa-eye-slash" onclick="togglePasswordVisibility()"></i>
+        </div>
+    </div>
+        <script>
+            function togglePasswordVisibility() {
+                var passwordInput = document.getElementById('password');
+                var passwordToggleIcon = document.querySelector('.password-toggle-icon');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggleIcon.classList.remove('fa-eye-slash');
+                    passwordToggleIcon.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggleIcon.classList.remove('fa-eye');
+                    passwordToggleIcon.classList.add('fa-eye-slash');
+                }
+            }
+        </script>
+        <div>
+        <!-- 2 column grid layout for inline styling -->
+        <% if(message){ %>
+            <div class="alert alert-danger">
+                <%= message %>
+            </div>
+        
+            <% } %>
+</div>
+        <button type="submit" class="btn btn-4  btn btn-success d-grid gap-2 col-3 mx-auto">S'inscrire</button>
+    </form>
+</div>
+</div>
+
+
+<%- include('parts/footer.ejs')%>

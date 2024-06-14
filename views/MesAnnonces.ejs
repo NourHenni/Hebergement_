@@ -1,0 +1,56 @@
+<%- include('parts/header.ejs')%>
+<br>
+<br>
+<div class="container">
+
+<table class="table">
+    <thead>
+      <tr>
+        
+        <th scope="col">Titre</th>
+        <th scope="col">Adresse</th>
+        <th scope="col">Téléphone</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Image</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% for(let annonce of MesAnnonces) {%>
+      <tr>
+        <td><%= annonce.titre %></td>
+        <td><%= annonce.adresse %></td>
+          <th><%= annonce.tel %> </th>
+        <td><%= annonce.montant %></td>
+        <td><img width="50" height="50" src="img/<%= annonce.photo %>"></td>
+         
+          
+           <td style="display: flex; ;">
+                    <form method="post" action="/MesAnnonces/delete"
+                      onsubmit="return confirm('Vous-étes sur de supprimer cette annonce?')">
+                      <input type="hidden" name="id" value="<%=annonce._id%>">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+           
+
+                <form method="get" action="/updateAnnonce"
+                  >
+                  <input type="hidden" name="id" value="<%=annonce._id%>">
+                  <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                </form>
+            
+            
+              
+            </td>
+      <% } %>
+      
+    </tbody>  
+  </table>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%- include('parts/footer.ejs')%>

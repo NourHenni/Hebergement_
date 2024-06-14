@@ -1,0 +1,64 @@
+<%- include('parts/header.ejs')%>
+
+<style ink rel="stylesheet" href="style.css;"></style>
+<body>
+    
+    <div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-lg-7">
+            <div class="img-property-slide-wrap">
+              <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="img/<%= annonce.photo %>" class="d-block w-100" alt="...">
+                  </div>
+                  
+                </div>
+               
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <h2 class="heading text-primary"><%= annonce.titre %></h2>
+            <p class="meta"><%= annonce.adresse %></p>
+            <p class="text-black-50">
+            
+            </p>
+           
+              <div class="text">
+                
+                <p >
+                <%= annonce.text %>
+                </p>
+              <div>
+                <h2 class="heading text-primary">
+                  Contact :
+                </h2>
+                 <h5> Pour plus d'informations veuillez nous contacter </h5>
+                <div>
+              <span class="d-flex align-items-center">
+                <i class="bi bi-telephone bi-lg icon-large icon-padding"></i>
+                <h6 class="ms-3 mb-0">
+                  <%= annonce.tel %>
+                </h6>
+              </span>
+
+              <span class="d-flex align-items-center">
+                <i class="bi bi-envelope bi-lg icon-large icon-padding"></i>
+                <a href="mailto:<%= annonce.email %>" class="ms-3 mb-0">
+                  <%= annonce.email %>
+                </a>
+              </span>
+
+
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('parts/footer.ejs')%>
